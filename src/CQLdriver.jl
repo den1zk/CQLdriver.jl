@@ -330,17 +330,23 @@ function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatemen
     while(true)
         println("in loop")
         future = cql_session_execute(session, statement)
-        @show future
+        println("future döndü mü")
         err = cqlfuturecheck(future, "Session Execute")
+        println("cql future check bitti ms")
         err == CQL_OK && break
         if (err != CQL_OK) & (retries == 0)
+            println("....")
             cql_statement_free(statement)
+            println("________")
             cql_future_free(future)
+            println("sssssssssss")
             return err
         end
         sleep(1)
         retries -= 1
+        println("freeing")
         cql_future_free(future)
+        println("freed")
     end
     return CQL_OK, future
 end
