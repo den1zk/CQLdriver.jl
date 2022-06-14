@@ -99,6 +99,7 @@ Check if a future contains any errors
 """
 function cqlfuturecheck(future::Ptr{CassFuture}, caller::String = "")
     err = cql_future_error_code(future)
+    println("checked code")
     # only prints valid messages for client errors
     if err != CQL_OK
         println("Error in CQL operation: ", caller)

@@ -92,6 +92,7 @@ function cql_future_error_code(future::Ptr{CassFuture})
             UInt16,
             (Ptr{CassFuture},),
             future)
+    println("error code check", val)        
     return val::UInt16
 end
 
