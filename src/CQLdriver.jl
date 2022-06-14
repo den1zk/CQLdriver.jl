@@ -330,8 +330,8 @@ function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatemen
     future = nothing
     while(true)
         println("in loop", session, statement, retries)
-        future = cql_session_execute(session, statement)
-        println(">>>>>", typeof(future) ==  C_NULL)
+        ff = cql_session_execute(session, statement)
+        println(">>>>>",ff)
         #if typeof(future) == Ptr{CassFuture} 
         println("future döndü mü")
         err = cqlfuturecheck(future, "Session Execute")
