@@ -363,7 +363,7 @@ end
 
 function cql_statement_set_request_timeout(statement::Ptr{CassStatement}, timeout::Int)
     err = ccall(
-            (:cass_statement_set_request_timeout, "CASSLIBNAME"),
+            (:cass_cluster_set_request_timeout, "CASSLIBNAME"),
             Cushort,
             (Ptr{CassStatement}, Clonglong),
             statement, timeout)
