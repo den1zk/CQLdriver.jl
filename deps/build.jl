@@ -75,4 +75,4 @@ if Sys.isapple()
         error("This package requires cassandra-cpp-driver to be installed, but the build system only understands apt and yum.")
     end=#
     println("NOT I AM PAST THIS")
-else    
+end    
