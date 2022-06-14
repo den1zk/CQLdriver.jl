@@ -376,6 +376,7 @@ function cql_session_execute(session::Ptr{CassSession}, statement::Ptr{CassState
                 Ptr{CassFuture},
                 (Ptr{CassSession}, Ptr{CassStatement}),
                 session, statement)
+    println("buradayim..")            
     return future::Ptr{CassFuture}
 end
 
