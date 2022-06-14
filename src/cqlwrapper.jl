@@ -87,14 +87,14 @@ function cql_cluster_set_queue_size(cluster::Ptr{CassCluster}, siz::Int64)
 end
 
 function cql_future_error_code(future::Ptr{CassFuture})
+    println("typeof", typeof(future))
     val = ccall(
-            #(:cass_future_error_code, "CASSLIBNAME"),
-            (:cass_future_error_message, "CASSLIBNAME"),
-            Cstring,
+            (:cass_future_error_code, "CASSLIBNAME"),
+            UInt16,
             (Ptr{CassFuture},),
             future)
     println("error code check", val)        
-    return val::String
+    return val::UInt16
 end
 
 function cql_future_error_message(future::Ptr{CassFuture}, strref::Ref{Ptr{UInt8}}, siz::Ref{Csize_t})
