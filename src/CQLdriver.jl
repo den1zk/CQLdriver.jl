@@ -383,7 +383,7 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     # output = DataFrame()
     morepages = true
     err = CQL_OK
-    println('error??, ', err);
+    println('error??, ' *  err);
     # process first page
     err, future = _cqlresultscheck(session, statement, retries)
     @show err, future
@@ -395,9 +395,9 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     result = cql_future_get_result(future)
     @show result
 
-    println('burayı gördm')
+    println("burayı gördm")
     cql_future_free(future)
-    println('burayı göremicem')
+    println("burayı göremicem")
     rows, cols = size(result)
 
     # define all the types we will need
