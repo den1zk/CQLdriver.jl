@@ -328,7 +328,9 @@ end
 function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatement}, retries::Int)
     future = nothing
     while(true)
+        println("in loop")
         future = cql_session_execute(session, statement)
+        @show future
         err = cqlfuturecheck(future, "Session Execute")
         err == CQL_OK && break
         if (err != CQL_OK) & (retries == 0)
@@ -383,6 +385,7 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     morepages = true
     err = CQL_OK
     # process first page
+    println("checking results")
     err, future = _cqlresultscheck(session, statement, retries)
     @show err, future
     if err != CQL_OK
