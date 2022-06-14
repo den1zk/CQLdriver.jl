@@ -326,6 +326,9 @@ function cqlclose(session::Ptr{CassSession}, cluster::Ptr{CassCluster})
     cql_session_free(session)
     cql_cluster_free(cluster)
 end
+#=future = cql_session_connect(session, cluster)
+err = cqlfuturecheck(future, "Session Connect") | err
+=#
 
 function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatement}, retries::Int)
     future = nothing
@@ -333,7 +336,7 @@ function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatemen
         println("in loop", session, statement, retries)
         future = cql_session_execute(session, statement)
         #if typeof(future) == Ptr{CassFuture} 
-        println("future döndü mü")
+        println("future döndü mü ", future)
         err = cqlfuturecheck(future, "Session Execute")
         println("cql future check bitti ms")
         err == CQL_OK && break
