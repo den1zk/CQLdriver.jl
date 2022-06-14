@@ -20,7 +20,7 @@ end
 @genstruct CassCluster
 @genstruct CassSession
 @genstruct CassString
-@genstruct CassStatementx
+@genstruct CassStatement
 @genstruct CassResult
 @genstruct CassIterator
 @genstruct CassRow
