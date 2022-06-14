@@ -379,20 +379,25 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     statement = cql_statement_new(query, 0)
     cql_statement_set_request_timeout(statement, timeout)
     cql_statement_set_paging_size(statement, pgsize)
-
+    println("-----")
     # output = DataFrame()
     morepages = true
     err = CQL_OK
-
+    println('error??, 'err);
     # process first page
     err, future = _cqlresultscheck(session, statement, retries)
+    @show err, future
     if err != CQL_OK
         return err::UInt16, StructArray()
     end
 
     # get result
     result = cql_future_get_result(future)
+    @show result
+
+    println('burayı gördm')
     cql_future_free(future)
+    println('burayı göremicem')
     rows, cols = size(result)
 
     # define all the types we will need
