@@ -98,6 +98,7 @@ Check if a future contains any errors
 - `err::UInt`: a 16 bit integer with an error code. No error returns 0
 """
 function cqlfuturecheck(future::Ptr{CassFuture}, caller::String = "")
+    println("hayriş", future, future ==C_NULL)
     err = cql_future_error_code(future)
     println("checked code")
     # only prints valid messages for client errors
@@ -330,8 +331,7 @@ function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatemen
     future = nothing
     while(true)
         println("in loop", session, statement, retries)
-        ff = cql_session_execute(session, statement)
-        println(">>>>>",ff)
+        future = cql_session_execute(session, statement)
         #if typeof(future) == Ptr{CassFuture} 
         println("future döndü mü")
         err = cqlfuturecheck(future, "Session Execute")
