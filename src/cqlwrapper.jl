@@ -89,7 +89,7 @@ end
 function cql_future_error_code(future::Ptr{CassFuture})
     val = ccall(
             #(:cass_future_error_code, "CASSLIBNAME"),
-            (:cass_future_error_message, "CASSLIBNAME")
+            (:cass_future_error_message, "CASSLIBNAME"),
             Cstring,
             (Ptr{CassFuture},),
             future)
