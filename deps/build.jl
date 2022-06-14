@@ -32,7 +32,7 @@ if Sys.islinux()
         !dl && error("Unable to download CPP driver.")
         inst = try success(`sudo dpkg -i $cass_target`) catch e false end
         !inst && error("Unable to install CPP driver.")
-        replace("./src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.so.2\"")
+        replace("../src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.so.2\"")
     else
         error("This package requires cassandra-cpp-driver to be installed, but the build system only understands apt and yum.")
     end
@@ -53,5 +53,5 @@ if Sys.isapple()
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
         cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
-    replace("./src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.dylib\"")
+    replace("../src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.dylib\"")
 end    
