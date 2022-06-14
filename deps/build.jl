@@ -1,6 +1,5 @@
 using Libdl
 version = "2.11.0"
-global cassandralibname = "libcassandra.so.2"
 if Sys.islinux()
     const has_driver = !isempty(Libdl.find_library(["libcassandra"]))
     const has_yum = try success(`yum --version`) catch e false end
@@ -33,6 +32,7 @@ if Sys.islinux()
         !dl && error("Unable to download CPP driver.")
         inst = try success(`sudo dpkg -i $cass_target`) catch e false end
         !inst && error("Unable to install CPP driver.")
+        replace("./src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.so.2\"")
     else
         error("This package requires cassandra-cpp-driver to be installed, but the build system only understands apt and yum.")
     end
@@ -40,7 +40,7 @@ if Sys.islinux()
 end
 
 if Sys.isapple()
-    cassandralibname = "libcassandra.dylib"
+    #cassandralibname = "libcassandra.dylib"
     hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
@@ -53,4 +53,5 @@ if Sys.isapple()
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
         cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
+    replace("./src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.dylib\"")
 end    
