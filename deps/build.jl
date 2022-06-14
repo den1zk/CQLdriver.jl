@@ -1,6 +1,6 @@
 using Libdl
 version = "2.11.0"
-global cassanralibname = "libcassandra.so.2"
+global cassandralibname = "libcassandra.so.2"
 if Sys.islinux()
     const has_driver = !isempty(Libdl.find_library(["libcassandra"]))
     const has_yum = try success(`yum --version`) catch e false end
