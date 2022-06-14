@@ -32,15 +32,15 @@ if Sys.islinux()
         !dl && error("Unable to download CPP driver.")
         inst = try success(`sudo dpkg -i $cass_target`) catch e false end
         !inst && error("Unable to install CPP driver.")
-        replace("../src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.so.2\"")
+        command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.so.2/g' ../src/cqlwrapper.jl`
+        sedresult = try run(command) catch e false end
+        sedresult == false && error("could not build!")
     else
         error("This package requires cassandra-cpp-driver to be installed, but the build system only understands apt and yum.")
     end
-    #error("This package does not support OSX or Windows")
 end
 
 if Sys.isapple()
-    #cassandralibname = "libcassandra.dylib"
     hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
@@ -53,5 +53,7 @@ if Sys.isapple()
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
         cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
-    replace("../src/cqlwrapper.jl", "CASSLIBNAME" => "\"libcassandra.dylib\"")
-end    
+    command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.dylib/g' ../src/cqlwrapper.jl`
+    sedresult = try run(command) catch e false end
+    sedresult == false && error("could not build!")
+end
