@@ -373,13 +373,14 @@ function cql_statement_set_request_timeout(statement::Ptr{CassStatement}, timeou
 end
 
 function cql_session_execute(session::Ptr{CassSession}, statement::Ptr{CassStatement})
-    GC.enable(false)
+    println("sesss, state" , session , " ", statement)
     future = ccall(
                 (:cass_session_execute, "CASSLIBNAME"),
                 Ptr{CassFuture},
                 (Ptr{CassSession}, Ptr{CassStatement}),
                 session, statement)
-    println("buradayim..",future)            
+    println("buradayim..",future) 
+    println("futurei bastirmak")           
     return future::Ptr{CassFuture}
 end
 
