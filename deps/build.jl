@@ -53,6 +53,8 @@ if Sys.isapple()
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
         cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
+    cp("/usr/local/opt/openssl/lib/libcassandra.so.2", "/usr/local/lib/libcassandra.so.2.dylib")
+
     command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.so.2/g' ../src/cqlwrapper.jl`
     sedresult = try run(command) catch e false end
     sedresult == false && error("could not build!")
