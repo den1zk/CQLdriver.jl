@@ -44,7 +44,7 @@ if Sys.isapple()
     #hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
-    if !hascassandra || !hascrypt || !hasssl
+    if !hascrypt || !hasssl
         #if !hascassandra || !hascrypt || !hasssl
 
         error("libcassandra and libcrypto and libssl must exist!")
