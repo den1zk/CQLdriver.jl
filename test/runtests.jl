@@ -5,7 +5,7 @@ Pkg.add("StructArrays")
 Pkg.add("IndexedTables")
 Pkg.add(url= "https://github.com/den1zk/CQLdriver.jl")
 using DataFrames, StructArrays, IndexedTables, CQLdriver
-session, cluster, err = cqlinit("127.0.0.1")
+session, cluster, err = cqlinit("10.19.1.1")
 @show session, cluster, err
 query = "SELECT * FROM mtxbar.barday1 limit 100"
 @show cqlread(session, query, pgsize = 1000, retries = 6)

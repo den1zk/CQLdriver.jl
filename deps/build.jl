@@ -41,7 +41,7 @@ if Sys.islinux()
 end
 
 if Sys.isapple()
-    hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
+    hascassandra = isfile("/usr/local/lib/libcassandra.so.2")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     if !hascassandra || !hascrypt || !hasssl
@@ -53,7 +53,7 @@ if Sys.isapple()
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
         cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
-    command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.dylib/g' ../src/cqlwrapper.jl`
+    command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.so.2/g' ../src/cqlwrapper.jl`
     sedresult = try run(command) catch e false end
     sedresult == false && error("could not build!")
 end
