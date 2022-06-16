@@ -70,6 +70,10 @@ if Sys.isapple()
     if !isfile(ssltransferloc) && isarm !== true
         cp(sslloc, ssltransferloc)
     end
+    if !isfile(ssltransferloc) && isarm !== true
+        cp(sslloc, ssltransferloc)
+    end
+    isarm === true && run(`cp /opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
 
     command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.dylib/g' ../src/cqlwrapper.jl`
     sedresult = try run(command) catch e false end
