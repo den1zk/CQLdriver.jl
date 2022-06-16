@@ -1,4 +1,7 @@
 using Libdl
+using Pkg
+Pkg.add("CpuId")
+using CpuId
 version = "2.11.0"
 if Sys.islinux()
     const has_driver = !isempty(Libdl.find_library(["libcassandra"]))
@@ -44,7 +47,7 @@ if Sys.isapple()
     hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
-    armresult = run(`uname -m`) == "arm64"
+    isarm = try cpuinfo() catch e true end
     if !hascassandra
         command = isarm ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
         cassandraresult = try run(command) catch e false end
