@@ -43,8 +43,10 @@ end
 
 if Sys.isapple()
     isarm = try cpuinfo() catch e true end
-    if !isfile("/usr/local/lib/libcassandra.dylib")
+    cassloc = isarm ? "opt/homebrew/lib/libcassandra.dylib" : "/usr/local/lib/libcassandra.dylib"
+    if !isfile(cassloc)
         command = isarm ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
+        isarm && run(`cp opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
         cassandraresult = try run(command) catch e false end
     end    
     if !(isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")) || 
@@ -54,10 +56,9 @@ if Sys.isapple()
         hascrypt = true
         hasssl = true
     end    
-    hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
+    hascassandra = isfile(cassloc)
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
-
     if !hascrypt || !hasssl || !hascassandra
         error("libcassandra and libcrypto and libssl must exist!")
     end    
