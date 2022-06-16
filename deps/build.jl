@@ -42,21 +42,22 @@ if Sys.islinux()
 end
 
 if Sys.isapple()
-    hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
-    hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
-    hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     isarm = try cpuinfo() catch e true end
-    if !hascassandra
+    if !isfile("/usr/local/lib/libcassandra.dylib")
         command = isarm ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
         cassandraresult = try run(command) catch e false end
-        hascassandra = true
     end    
-    if !hascrypt || !hasssl
+    if !(isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")) || 
+        !(isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib"))
         command = `brew install openssl`
         sslresult = try run(command) catch e false end
         hascrypt = true
         hasssl = true
     end    
+    hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
+    hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
+    hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
+
     if !hascrypt || !hasssl || !hascassandra
         error("libcassandra and libcrypto and libssl must exist!")
     end    
