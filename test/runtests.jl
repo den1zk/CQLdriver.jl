@@ -3,7 +3,7 @@ import Pkg;
 Pkg.add("DataFrames")
 Pkg.add("StructArrays")
 Pkg.add("IndexedTables")
-Pkg.add(path= "/Users/deniz/projects/CQLdriver.jl")
+Pkg.add(url= "https://github.com/den1zk/CQLdriver.jl")
 using DataFrames, StructArrays, IndexedTables, CQLdriver
 session, cluster, err = cqlinit("127.0.0.1")
 @show session, cluster, err
