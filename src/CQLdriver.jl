@@ -98,12 +98,9 @@ Check if a future contains any errors
 - `err::UInt`: a 16 bit integer with an error code. No error returns 0
 """
 function cqlfuturecheck(future::Ptr{CassFuture}, caller::String = "")
-    println("hayriş", future, future ==C_NULL)
     err = cql_future_error_code(future)
-    println("checked code")
     # only prints valid messages for client errors
     if err != CQL_OK
-        println("Error in CQL operation: ", caller)
         str = Vector{UInt8}(undef, 256)
         strref = Ref{Ptr{UInt8}}(pointer(str))
         siz = Ref{Csize_t}(sizeof(str))
@@ -333,29 +330,20 @@ err = cqlfuturecheck(future, "Session Connect") | err
 function _cqlresultscheck(session::Ptr{CassSession}, statement::Ptr{CassStatement}, retries::Int)
     future = nothing
     while(true)
-        println("in loop", session, statement, retries)
-        println("burada future", future)
         future = cql_session_execute(session, statement)
         #if typeof(future) == Ptr{CassFuture} 
-        println("future döndü mü ", future)
         err = cqlfuturecheck(future, "Session Execute")
-        println("cql future check bitti ms")
         err == CQL_OK && break
         if (err != CQL_OK) & (retries == 0)
-            println("....")
             cql_statement_free(statement)
-            println("________")
             cql_future_free(future)
-            println("sssssssssss")
             return err
         end
         #end    
         
         sleep(1)
         retries -= 1
-        println("freeing")
         cql_future_free(future)
-        println("freed")
     end
     return CQL_OK, future
 end
@@ -400,9 +388,7 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     morepages = true
     err = CQL_OK
     # process first page
-    println("checking results")
     err, future = _cqlresultscheck(session, statement, retries)
-    @show err, future
     if err != CQL_OK
         return err::UInt16, StructArray()
     end
@@ -411,9 +397,7 @@ function cqlread(session::Ptr{CassSession}, query::String; pgsize::Int=10000, re
     result = cql_future_get_result(future)
     @show result
 
-    println("burayı gördm")
     cql_future_free(future)
-    println("burayı göremicem")
     rows, cols = size(result)
 
     # define all the types we will need

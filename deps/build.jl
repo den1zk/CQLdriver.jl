@@ -44,9 +44,8 @@ if Sys.isapple()
     hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
     hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
-    if !hascrypt || !hasssl
-        #if !hascassandra || !hascrypt || !hasssl
-
+    if !hascrypt || !hasssl || !hascassandra
+        println("install -> brew install openssl  OR install -> brew install cassandra-cpp-driver")
         error("libcassandra and libcrypto and libssl must exist!")
     end    
     if !isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib") 

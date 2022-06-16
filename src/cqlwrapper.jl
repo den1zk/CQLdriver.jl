@@ -87,13 +87,11 @@ function cql_cluster_set_queue_size(cluster::Ptr{CassCluster}, siz::Int64)
 end
 
 function cql_future_error_code(future::Ptr{CassFuture})
-    println("typeof", typeof(future))
     val = ccall(
             (:cass_future_error_code, "CASSLIBNAME"),
             UInt16,
             (Ptr{CassFuture},),
             future)
-    println("error code check", val)        
     return val::UInt16
 end
 
@@ -373,14 +371,11 @@ function cql_statement_set_request_timeout(statement::Ptr{CassStatement}, timeou
 end
 
 function cql_session_execute(session::Ptr{CassSession}, statement::Ptr{CassStatement})
-    println("sesss, state" , session , " ", statement)
     future = ccall(
                 (:cass_session_execute, "CASSLIBNAME"),
                 Ptr{CassFuture},
                 (Ptr{CassSession}, Ptr{CassStatement}),
                 session, statement)
-    println("buradayim..",future) 
-    println("futurei bastirmak")           
     return future::Ptr{CassFuture}
 end
 
