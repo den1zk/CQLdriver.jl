@@ -42,18 +42,18 @@ end
 
 if Sys.isapple()
     hascassandra = isfile("/usr/local/lib/libcassandra.dylib")
-    hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
-    hasssl = isfile("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
+    hascrypt = isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
+    hasssl = isfile("/usr/local/opt/openssl/lib/libssl.3.dylib") || isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     if !hascrypt || !hasssl
         #if !hascassandra || !hascrypt || !hasssl
 
         error("libcassandra and libcrypto and libssl must exist!")
     end    
     if !isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib") 
-        cp("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib", "/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
+        cp("/usr/local/opt/openssl/lib/libcrypto.3.dylib", "/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")
     end
     if !isfile("/usr/local/opt/openssl/lib/libssl.1.1.dylib") 
-        cp("/usr/local/opt/openssl/lib/libssl.1.0.0.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
+        cp("/usr/local/opt/openssl/lib/libssl.3.dylib", "/usr/local/opt/openssl/lib/libssl.1.1.dylib")
     end
 
     command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.dylib/g' ../src/cqlwrapper.jl`
