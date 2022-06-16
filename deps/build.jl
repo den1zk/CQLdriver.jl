@@ -43,10 +43,10 @@ end
 
 if Sys.isapple()
     isarm = try cpuinfo() catch e true end
-    cassloc = isarm ? "opt/homebrew/lib/libcassandra.dylib" : "/usr/local/lib/libcassandra.dylib"
+    cassloc = isarm === true ? "opt/homebrew/lib/libcassandra.dylib" : "/usr/local/lib/libcassandra.dylib"
     if !isfile(cassloc)
-        command = isarm ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
-        isarm && run(`cp opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
+        command = isarm === true ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
+        isarm === true && run(`cp opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
         cassandraresult = try run(command) catch e false end
     end    
     if !(isfile("/usr/local/opt/openssl/lib/libcrypto.3.dylib") || isfile("/usr/local/opt/openssl/lib/libcrypto.1.1.dylib")) || 
