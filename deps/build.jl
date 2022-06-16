@@ -50,7 +50,7 @@ if Sys.isapple()
     cryptotransferloc = isarm === true ?  "/usr/local/lib/libcrypto.1.1.dylib" : "/usr/local/opt/openssl/lib/libcrypto.1.1.dylib"
     if !isfile(cassloc)
         command = isarm === true ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
-        isarm === true && run(`cp opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
+        isarm === true && run(`cp /opt/homebrew/lib/libcassandra.dylib /usr/local/lib/libcassandra.dylib`)
         cassandraresult = try run(command) catch e false end
     end    
     if !(isfile(cryptoloc)) || 
@@ -64,10 +64,10 @@ if Sys.isapple()
     if !hascrypt || !hasssl || !hascassandra
         error("libcassandra and libcrypto and libssl must exist!")
     end    
-    if !isfile(cryptotransferloc) 
+    if !isfile(cryptotransferloc) && isarm !== true
         cp(cryptoloc, cryptotransferloc)
     end
-    if !isfile(ssltransferloc) 
+    if !isfile(ssltransferloc) && isarm !== true
         cp(sslloc, ssltransferloc)
     end
 
