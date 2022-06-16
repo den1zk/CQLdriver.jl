@@ -49,10 +49,13 @@ if Sys.isapple()
     if !hascassandra
         command = isarm ?  `arch -arm64 brew install cassandra-cpp-driver` : `brew install cassandra-cpp-driver`
         cassandraresult = try run(command) catch e false end
+        hascassandra = true
     end    
     if !hascrypt || !hasssl
         command = `brew install openssl`
         sslresult = try run(command) catch e false end
+        hascrypt = true
+        hasssl = true
     end    
     if !hascrypt || !hasssl || !hascassandra
         error("libcassandra and libcrypto and libssl must exist!")
