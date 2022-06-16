@@ -78,6 +78,6 @@ if Sys.isapple()
     run(`sed -i '' -e 's/CASSLIBNAME/\/opt\/homebrew\/lib\/libcassandra.dylib/g' ../src/cqlwrapper.jl`); 
 
     #command = `sed -i '' -e 's/CASSLIBNAME/libcassandra.dylib/g' ../src/cqlwrapper.jl`
-    sedresult = try run(command) catch e false end
+    #sedresult = try run(command) catch e false end
     sedresult == false && error("could not build!")
 end
