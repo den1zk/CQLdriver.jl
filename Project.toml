@@ -3,6 +3,7 @@ uuid = "9d1c9671-1ee4-5573-9bdf-56d4f028cf50"
 version = "0.12.1"
 
 [deps]
+CpuId = "adafc99b-e345-5852-983c-f28acb93d879"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 IndexedTables = "6deec6e2-d858-57c5-ab9b-e6ca5bd20e43"

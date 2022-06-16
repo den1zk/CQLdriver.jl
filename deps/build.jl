@@ -1,6 +1,4 @@
 using Libdl
-using Pkg
-Pkg.add("CpuId")
 using CpuId
 version = "2.11.0"
 if Sys.islinux()
